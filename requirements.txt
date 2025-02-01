@@ -1,2 +1,13 @@
-pandas>=1.3.0
-spacy>=3.0.0
+# Core Dependencies
+python-dotenv            # For loading environment variables from .env file
+pandas                   # For handling CSV data
+streamlit                # For the web app interface
+
+# LLM & NLP Dependencies
+langchain                # Framework for chaining LLMs
+crewai                   # For agentic AI workflows
+openai                   # Required if using OpenAI's GPT models
+spacy                    # NLP processing (Named Entity Recognition)
+tiktoken                 # Tokenizer for OpenAI models
+langchain-openai         # OpenAI plugin for Langchain
+langchain-community      # Community plugins for Langchain

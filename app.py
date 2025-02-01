@@ -1,10 +1,36 @@
-from src.data_preprocessing import preprocess_articles
+import streamlit as st
+import pandas as pd
+from src.summarization import generate_summary
+from src.hallucination import check_hallucination
+from src.bias_analysis import analyze_bias
 
-# Load and preprocess articles from the CSV
-df = preprocess_articles('data/cleaned_articles.csv')
+st.title("AI News Summarization Tool")
 
-# Display the processed data
-print(df[['title', 'cleaned_article', 'ner_entities']].head())
+# Upload CSV file
+uploaded_file = st.file_uploader("Upload CSV file", type="csv")
 
-# Save the processed data to a new CSV
-df.to_csv('processed_articles.csv', index=False)
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+
+    # Process each article
+    summaries, hallucination_checks, biases = [], [], []
+
+    for article in df['cleaned_article']:
+        summary = generate_summary(article)
+        hallucination = check_hallucination(article, summary)
+        bias = analyze_bias(summary)
+
+        summaries.append(summary)
+        hallucination_checks.append(hallucination)
+        biases.append(bias)
+
+    df['summary'] = summaries
+    df['hallucination_check'] = hallucination_checks
+    df['bias_analysis'] = biases
+
+    st.write("Processed Data:")
+    st.dataframe(df[['title', 'summary', 'hallucination_check', 'bias_analysis']])
+
+    # Save to CSV
+    df.to_csv("processed_results.csv", index=False)
+    st.download_button("Download Processed CSV", "processed_results.csv")
