@@ -11,3 +11,8 @@ spacy                    # NLP processing (Named Entity Recognition)
 tiktoken                 # Tokenizer for OpenAI models
 langchain-openai         # OpenAI plugin for Langchain
 langchain-community      # Community plugins for Langchain
+transformers             # Huggingface Transformers for LLMs
+phidata                  # For PHI detection
+scikit-learn             # For machine learning
+
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.0/en_core_web_sm-3.7.0-py3-none-any.whl
