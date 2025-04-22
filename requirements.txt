@@ -1,18 +1,30 @@
-# Core Dependencies
-python-dotenv            # For loading environment variables from .env file
-pandas                   # For handling CSV data
-streamlit                # For the web app interface
+# Streamlit frontend
+streamlit
+python-dotenv
 
-# LLM & NLP Dependencies
-langchain                # Framework for chaining LLMs
-crewai                   # For agentic AI workflows
-openai                   # Required if using OpenAI's GPT models
-spacy                    # NLP processing (Named Entity Recognition)
-tiktoken                 # Tokenizer for OpenAI models
-langchain-openai         # OpenAI plugin for Langchain
-langchain-community      # Community plugins for Langchain
-transformers             # Huggingface Transformers for LLMs
-phidata                  # For PHI detection
-scikit-learn             # For machine learning
+# RSS & Guardian scraping
+feedparser
+requests
 
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.0/en_core_web_sm-3.7.0-py3-none-any.whl
+# HTML parsing
+beautifulsoup4           # provides `from bs4 import BeautifulSoup`  [oai_citation_attribution:0‡GitHub](https://github.com/google-research/bleurt/blob/master/bleurt/wmt/evaluator.py?utm_source=chatgpt.com)
+readability-lxml
+
+# Full‑text extraction (optional paths)
+newspaper3k
+trafilatura
+
+# NER & summarization
+transformers
+torch
+google-generativeai
+tf-keras
+
+# CPU‑only evaluation metrics
+evaluate
+
+# BLEURT metric and its TF dependencies
+bluert git+https://github.com/google-research/bleurt.git    # installs the BLEURT package  [oai_citation_attribution:1‡GitHub](https://github.com/google-research/bleurt?utm_source=chatgpt.com)
+tensorflow>=1.15                                     # BLEURT requires TF ≥1.15  [oai_citation_attribution:2‡GitHub](https://github.com/google-research/bleurt/blob/master/setup.py?utm_source=chatgpt.com)
+tf-slim>=1.1                                         # BLEURT’s setup.py lists tf-slim≥1.1  [oai_citation_attribution:3‡GitHub](https://github.com/google-research/bleurt/blob/master/setup.py?utm_source=chatgpt.com)
+sentencepiece                                        # BLEURT’s setup.py lists sentencepiece  [oai_citation_attribution:4‡GitHub](https://github.com/google-research/bleurt/blob/master/setup.py?utm_source=chatgpt.com)

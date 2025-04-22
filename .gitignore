@@ -2,3 +2,47 @@
 .env
 data/
 venv/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon files
+Icon?
+
+# Thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Desktop Services Store
+.DS_Store?
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# macOS Resource forks
+._*
+
+# Xcode
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xcuserstate
+project.xcworkspace/
+
+# QuickLook thumbnails
+*.qlgenerator
+*.qlpreview
