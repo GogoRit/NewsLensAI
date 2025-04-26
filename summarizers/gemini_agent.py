@@ -43,41 +43,51 @@ def _clean_text(raw: str) -> str:
 def summarize_with_gemini(
     raw_text: str,
     entities: List[str],
-    max_words: int = 50,
+    max_words: int = 100,
     max_input_chars: int = 4000
 ) -> str:
-    # Clean HTML/ads
+    # 1. Clean HTML/ads
     text = _clean_text(raw_text)
-    # Truncate if too long
-    if len(text) > max_input_chars:
-        text = text[-max_input_chars:]
 
-    # Build self‑verifying prompt
-    prompt = (
-        f"Please summarize the following article in exactly {max_words} words—no more, no less. "
-        f"Use these key entities: {', '.join(entities)}. "
-        "Count your words and include the count at the end. "
-        "Do not add any commentary.\n\n"
-        f"Article:\n{text}\n\nSummary:"
-    )
+    # 2. Truncate if too long
+    if len(text) > max_input_chars:
+        text = text[-max_input_chars:]  # use the last chunk for context
+
+    # 3. Build an editorial-style, approximate-length prompt
+    entities_list = ", ".join(entities) if entities else "None"
+    prompt = f"""
+    You are an experienced news editor. Summarize the following article into one concise, coherent paragraph of around {max_words} words:
+
+    • Use complete sentences—do not cut off mid-thought.  
+    • Include all Important Entities (confidence ≥ 85%): {entities_list}.  
+    • Focus on the lead (main point), key developments, and concluding insight—omit minor details.  
+    • Maintain a clear, neutral, informative tone—no hype or sensationalism.  
+    • Use only facts from the article—do not add or invent information.
+
+    Article:
+    {text}
+
+    Summary:
+    """
 
     try:
-        model  = genai.GenerativeModel(model_name="gemini-1.5-flash")
-        cfg    = GenerationConfig(
-            max_output_tokens=max_words * 3,
+        # 4. Generate summary via Gemini
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+        cfg = GenerationConfig(
+            max_output_tokens=max_words * 3,  # token cushion for ~50 words
             temperature=0.2,
             top_p=0.9,
-            top_k=40
+            top_k=40,
         )
-        resp   = model.generate_content(prompt, generation_config=cfg)
+        resp = model.generate_content(prompt, generation_config=cfg)
         summary = resp.text.strip()
         logger.info("Raw summary: %s", summary)
 
-        # Enforce exact word count
+        # 5. Optionally trim if the model greatly overshoots
         words = summary.split()
-        if len(words) > max_words:
-            summary = " ".join(words[:max_words])
-            logger.info("Truncated to %d words", max_words)
+        if len(words) > max_words * 1.5:
+            summary = " ".join(words[: max_words * 1])  # keep first ~max_words
+            logger.info("Trimmed summary to around %d words", max_words)
 
         return summary
 

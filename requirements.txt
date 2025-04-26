@@ -28,3 +28,5 @@ bluert git+https://github.com/google-research/bleurt.git    # installs the BLEUR
 tensorflow>=1.15                                     # BLEURT requires TF ≥1.15  [oai_citation_attribution:2‡GitHub](https://github.com/google-research/bleurt/blob/master/setup.py?utm_source=chatgpt.com)
 tf-slim>=1.1                                         # BLEURT’s setup.py lists tf-slim≥1.1  [oai_citation_attribution:3‡GitHub](https://github.com/google-research/bleurt/blob/master/setup.py?utm_source=chatgpt.com)
 sentencepiece                                        # BLEURT’s setup.py lists sentencepiece  [oai_citation_attribution:4‡GitHub](https://github.com/google-research/bleurt/blob/master/setup.py?utm_source=chatgpt.com)
+
+sentence-transformers
